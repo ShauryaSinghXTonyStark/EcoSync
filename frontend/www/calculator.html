@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSync - Carbon Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <h2>📊 Carbon Intelligence</h2>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="marketplace.html">Marketplace</a>
+                <a href="calculator.html" style="color: var(--primary);">Calculator</a>
+                <a href="nature.html">Nature & Bio</a>
+                <a href="ai.html">EcoAI Assistant</a>
+                <button class="theme-btn" onclick="toggleTheme()">🌓 Theme</button>
+            </div>
+        </nav>
+
+        <div class="card">
+            <h2>Smart Waste Impact & Carbon Calculator</h2>
+            <label>Select Waste Category:</label>
+            <select id="wasteType">
+                <option value="organic">Organic Waste</option>
+                <option value="plastic">Plastic Packaging</option>
+                <option value="electronic">E-Waste</option>
+            </select>
+            <label>Quantity (in kg):</label>
+            <input type="number" id="wasteAmount" placeholder="e.g., 20" min="1">
+            <button onclick="calculate()">Compute Impact</button>
+            <div id="result" class="card" style="margin-top: 15px; display:none; background: #ECFDF5; color: #065F46;"></div>
+        </div>
+    </div>
+    <script>
+        async function calculate() {
+            const amt = document.getElementById('wasteAmount').value;
+            const type = document.getElementById('wasteType').value;
+            
+            if(!amt || amt <= 0) { 
+                alert('Enter valid quantity'); 
+                return; 
+            }
+            
+            // 1. Math calculations for the user screen
+            const co2 = (amt * 3.5).toFixed(2);
+            const pts = amt * 15;
+            const res = document.getElementById('result');
+            
+            res.style.display = 'block';
+            res.innerHTML = `✨ Saved <strong>${co2} kg CO₂</strong> and earned <strong>${pts} Eco-Points</strong>!<br><small style="color: #047857;">Syncing entry with EcoSync live cloud server...</small>`;
+
+            // 2. BACKEND INTEGRATION: Sending this action live to your server.js engine!
+            try {
+                // We send a network request to the backend route we configured on Port 5000
+                const response = await fetch('http://localhost:5000/api/log-tree', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        quantity: parseInt(amt) 
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Backend Sync Successful!", data);
+                    res.innerHTML = `✨ Saved <strong>${co2} kg CO₂</strong> and earned <strong>${pts} Eco-Points</strong>!<br><strong style="color: #059669;">✅ Data synced with EcoSync Core Backend Engine!</strong>`;
+                } else {
+                    console.error("Server returned an error status.");
+                }
+            } catch (error) {
+                console.error("Could not reach backend engine server. Make sure your CMD is running node server.js!", error);
+            }
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+        }
+    </script>
+</body>
+</html>
