@@ -1,0 +1,10 @@
+{
+  "name": "ecosync-backend",
+  "version": "1.0.0",
+  "description": "EcoSync Core Backend Engine",
+  "main": "server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
