@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoLoop - Home Dashboard</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <h2>🌍 EcoLoop</h2>
+            <div class="nav-links">
+                <a href="index.html" style="color: var(--primary);">Home</a>
+                <a href="marketplace.html">3R Marketplace</a>
+                <a href="calculator.html">Calculator</a>
+                <a href="nature.html">Nature & Bio</a>
+                <a href="ai.html">EcoAI Assistant</a>
+                <button class="theme-btn" onclick="toggleTheme()">🌓 Theme</button>
+            </div>
+        </nav>
+
+        <div class="card" style="text-align: center; padding: 40px;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 10px; color: var(--primary-dark);">Welcome to EcoLoop Elite</h1>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;">RNTU Advanced 3R Sustainability Platform & Green Exchange</p>
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="marketplace.html"><button style="width: auto; padding: 12px 25px;">Explore Marketplace</button></a>
+                <a href="calculator.html"><button style="width: auto; padding: 12px 25px; background: #047857;">Open Calculator</button></a>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.setAttribute('data-theme', html.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+        }
+        
+    </script>
+</body>
+</html>
+<!-- Interactive Mascot Widget -->
+<div class="mascot-container">
+    <div class="mascot-avatar" id="mascotBtn" onclick="reactMascot()">🌍</div>
+    <div id="mascotSpeech" class="mascot-speech">Hi! I'm EcoBuddy, your RNTU guide. Tap me!</div>
+</div>
+
+<script>
+    const mascotPhrases = [
+        "Let's make RNTU plastic-free today! 🌿",
+        "Every kg of recycled waste counts towards our green score! ♻️",
+        "Did you check out our new 3R Marketplace? 🛍️",
+        "Powered by C++ routing algorithms and elite JavaScript! ⚡"
+    ];
+
+    function reactMascot() {
+        const speechBubble = document.getElementById('mascotSpeech');
+        const randomPhrase = mascotPhrases[Math.floor(Math.random() * mascotPhrases.length)];
+        speechBubble.style.opacity = '0';
+        setTimeout(() => {
+            speechBubble.innerText = randomPhrase;
+            speechBubble.style.opacity = '1';
+        }, 200);
+    }
+</script>
